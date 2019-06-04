@@ -63,4 +63,11 @@ class Cell {
 
     rect(this.cords.x, this.cords.y, cellSize, cellSize);
   }
+
+  fillCellComplete() {
+    const repeat = 5;
+
+    for (let i = 0; i <= repeat; i++)
+      this.fillCell(lightGreen);
+  }
 }

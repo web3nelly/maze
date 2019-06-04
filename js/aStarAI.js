@@ -192,14 +192,17 @@ class AStarAI {
     noFill();
     strokeWeight(cellSize / 10);
     strokeCap(ROUND);
-    stroke(255, 200);
-    // smooth()
+    stroke(white);
 
     for (let i = 0; i < this.path.length; i++) {
       vertex(this.path[i].cords.centerX, this.path[i].cords.centerY)
     }
 
     endShape();
+  }
+
+  fillVisited() {
+    this.closedStack.forEach(cell => cell.fillCellComplete());
   }
 
   getIndex(col, row) {
