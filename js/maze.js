@@ -8,24 +8,21 @@ class Maze {
   constructor(width, height) {
     this.width = width;
     this.height = height;
-    this.cols = floor(this.width / nodeSize);
-    this.rows = floor(this.height / nodeSize);
+    this.cols = floor(width / nodeSize);
+    this.rows = floor(height / nodeSize);
 
     this.buildGridArray();
   }
 
   buildGridArray() {
-    for (let row = 0; row < this.rows; row++) {
-      for (let col = 0; col < this.cols; col++) {
+    for (let row = 0; row < this.rows; row++)
+      for (let col = 0; col < this.cols; col++)
         this.grid.push(new Node(col, row, nodeSize));
-      }
-    }
   }
 
   draw() {
-    for (let node = 0; node < this.grid.length; node++) {
-      this.grid[node].drawNode();
-    }
+    for (const node of this.grid)
+      node.drawNode();
   }
 
   getRandomNeighbor(node) {
@@ -51,24 +48,22 @@ class Maze {
 
     const neighbors = [];
 
-    if (top && !top.visited) {
+    if (top && !top.visited)
       neighbors.push(top);
-    }
-    if (right && !right.visited) {
+
+    if (right && !right.visited)
       neighbors.push(right);
-    }
-    if (bottom && !bottom.visited) {
+
+    if (bottom && !bottom.visited)
       neighbors.push(bottom);
-    }
-    if (left && !left.visited) {
+
+    if (left && !left.visited)
       neighbors.push(left);
-    }
 
     return neighbors;
   }
 
   removeWalls(curr, next) {
-
     const x = curr.col - next.col;
     if (x === 1) {
       curr.walls[3] = false;
@@ -91,13 +86,11 @@ class Maze {
   }
 
   cleanUp() {
-    this.grid.forEach(node => {
-      node.visited = false;
-    });
+    this.grid.forEach(node => node.visited = false);
   }
 
   getIndex(col, row) {
-    // return if invalid index
+    // return -1 if invalid index
     if (col < 0 || row < 0 || col > this.cols - 1 || row > this.rows - 1)
       return -1;
 
