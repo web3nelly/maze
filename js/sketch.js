@@ -33,7 +33,7 @@ function setup() {
   white = color(250, 250, 250, 250);
 
   // Int Maze
-  maze = new MazeGen(width, height);
+  maze = new MazeDFSGen(width, height);
   // Set Starting cell for maze gen
   maze.currentCell = maze.grid[0];
 

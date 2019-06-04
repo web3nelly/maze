@@ -97,7 +97,7 @@ class AStarAI {
 
   heuristicCostEstimate(neighbor, goal) {
     // Euclidean distance (Moving diagonal)
-    const d = dist(neighbor.cords.x, neighbor.cords.y, goal.cords.x, goal.cords.y);
+    const d = dist(neighbor.cords.centerX, neighbor.cords.centerY, goal.cords.centerX, goal.cords.centerY);
 
     // Manhattan distance (Not moving diagonal)
     // const d =
