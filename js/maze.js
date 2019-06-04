@@ -8,8 +8,8 @@ class Maze {
   constructor(width, height) {
     this.width = width;
     this.height = height;
-    this.cols = floor(this.width / cellSize);
-    this.rows = floor(this.height / cellSize);
+    this.cols = floor(this.width / nodeSize);
+    this.rows = floor(this.height / nodeSize);
 
     this.buildGridArray();
   }
@@ -17,19 +17,19 @@ class Maze {
   buildGridArray() {
     for (let row = 0; row < this.rows; row++) {
       for (let col = 0; col < this.cols; col++) {
-        this.grid.push(new Cell(col, row, cellSize));
+        this.grid.push(new Node(col, row, nodeSize));
       }
     }
   }
 
   draw() {
-    for (let cell = 0; cell < this.grid.length; cell++) {
-      this.grid[cell].drawCell();
+    for (let node = 0; node < this.grid.length; node++) {
+      this.grid[node].drawNode();
     }
   }
 
-  getRandomNeighbor(cell) {
-    const neighbors = this.checkNeighbors(cell);
+  getRandomNeighbor(node) {
+    const neighbors = this.checkNeighbors(node);
 
     if (neighbors.length > 0) {
       const rn = floor(random(0, neighbors.length));
@@ -41,8 +41,8 @@ class Maze {
     return null;
   }
 
-  checkNeighbors(cell) {
-    const { col, row } = cell;
+  checkNeighbors(node) {
+    const { col, row } = node;
 
     const top = this.grid[this.getIndex(col, row - 1)];
     const right = this.grid[this.getIndex(col + 1, row)];
@@ -91,8 +91,8 @@ class Maze {
   }
 
   cleanUp() {
-    this.grid.forEach(cell => {
-      cell.visited = false;
+    this.grid.forEach(node => {
+      node.visited = false;
     });
   }
 

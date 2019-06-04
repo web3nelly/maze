@@ -2,30 +2,30 @@
 
 class MazeDFSGen extends Maze {
   stack = [];
-  currentCell = [];
+  currentNode = [];
   complete = false;
 
   create() {
     //Depth-first search
-    this.currentCell.visited = true;
-    this.currentCell.highlight();
+    this.currentNode.visited = true;
+    this.currentNode.highlight();
 
-    // console.log(this.currentCell)
-    const nextCell = this.getRandomNeighbor(this.currentCell);
+    // console.log(this.currentNode)
+    const nextNode = this.getRandomNeighbor(this.currentNode);
 
-    if (nextCell) {
+    if (nextNode) {
       //STEP 1 
-      nextCell.visited = true;
+      nextNode.visited = true;
       //STEP 2     
-      this.stack.push(this.currentCell);
+      this.stack.push(this.currentNode);
       //STEP 3
-      this.removeWalls(this.currentCell, nextCell);
+      this.removeWalls(this.currentNode, nextNode);
       //STEP 4
-      this.currentCell = nextCell;
+      this.currentNode = nextNode;
     }
     // Backtracking
     else if (this.stack.length > 0) {
-      this.currentCell = this.stack.pop();
+      this.currentNode = this.stack.pop();
     }
     // Maze completed
     else {

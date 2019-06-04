@@ -1,5 +1,5 @@
 // init global vars
-let cellSize;
+let nodeSize;
 let customFrameRate;
 let createMazeSpeed;
 let lightRed, yellowGreen, lightGreen, darkGreen, lightBlue, gray, white;
@@ -8,17 +8,17 @@ let pause = false;
 
 
 function setup() {
-  // The size of each cell(node) of the maze 
-  // Recommend cellSize: 10 - 160
-  cellSize = floor(windowWidth / 80);
+  // The size of each node(node) of the maze 
+  // Recommend nodeSize: 10 - 160
+  nodeSize = floor(windowWidth / 80);
 
-  // A custom frame rate which slows down the frames for a larger cell size
-  customFrameRate = floor(2000 / cellSize);
+  // A custom frame rate which slows down the frames for a larger node size
+  customFrameRate = floor(2000 / nodeSize);
 
-  // Smaller cells = more cells in the maze
-  // The more cells there are, the slower the maze is genorated
+  // Smaller nodes = more nodes in the maze
+  // The more nodes there are, the slower the maze is genorated
   // createMazeSpeed sets darw() loop to skip drawing every step of the maze genoration
-  createMazeSpeed = cellSize > 99 ? 1 : floor(600 / cellSize);
+  createMazeSpeed = nodeSize > 99 ? 1 : floor(600 / nodeSize);
 
   createCanvas(windowWidth, windowHeight); // Dynamic canvas size
   frameRate(customFrameRate);
@@ -34,8 +34,8 @@ function setup() {
 
   // Int Maze
   maze = new MazeDFSGen(width, height);
-  // Set Starting cell for maze gen
-  maze.currentCell = maze.grid[0];
+  // Set Starting node for maze gen
+  maze.currentNode = maze.grid[0];
 
   // Set AI
   aStarAI = new AStarAI();

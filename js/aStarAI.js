@@ -2,7 +2,7 @@
 
 class AStarAI {
   maze = {};
-  // Array of cells in maze
+  // Array of nodes in maze
   grid = [];
   // Fastest known patch from start to goal
   path = [];
@@ -21,7 +21,7 @@ class AStarAI {
     this.maze = { ...maze };
     //Delete unused props of maze obj, should I?
     delete this.maze.stack;
-    delete this.maze.currentCell;
+    delete this.maze.currentNode;
 
     this.grid = [...maze.grid];
 
@@ -44,7 +44,7 @@ class AStarAI {
     this.start.f = this.start.g + this.start.h;
     this.start.previous = false;
 
-    // Initially, only the start node/cell is known.
+    // Initially, only the start node/node is known.
     this.openStack.push(this.start);
   }
 
@@ -52,7 +52,7 @@ class AStarAI {
 
     if (this.openStack.length > 0) {
       // Keep solving
-      const current = this.getLowestFScoreCell();
+      const current = this.getLowestFScoreNode();
       this.updatePath(current);
 
       current.visited = true;
@@ -107,7 +107,7 @@ class AStarAI {
     return floor(d);
   }
 
-  getLowestFScoreCell() {
+  getLowestFScoreNode() {
     const { openStack } = this;
     let winner = 0;
 
@@ -118,8 +118,8 @@ class AStarAI {
     return openStack[winner];
   }
 
-  getAvaliableNeighbors(cell) {
-    const { col, row, walls } = cell;
+  getAvaliableNeighbors(node) {
+    const { col, row, walls } = node;
     const { grid, closedStack } = this;
 
     const top = grid[this.getIndex(col, row - 1)];
@@ -145,9 +145,9 @@ class AStarAI {
     return neighbors;
   }
 
-  removeFromOpenStack(cell) {
+  removeFromOpenStack(node) {
     for (let i = this.openStack.length; i >= 0; i--)
-      if (this.openStack[i] === cell)
+      if (this.openStack[i] === node)
         this.openStack.splice(i, 1);
   }
 
@@ -164,9 +164,9 @@ class AStarAI {
   }
 
   drawSolving() {
-    // Color start and finish cells
-    this.start.fillCell(darkGreen);
-    this.goal.fillCell(lightRed);
+    // Color start and finish nodes
+    this.start.fillNode(darkGreen);
+    this.goal.fillNode(lightRed);
     // color open set
     this.fillOpenStack();
 
@@ -176,7 +176,7 @@ class AStarAI {
   drawPath() {
     beginShape();
     noFill();
-    strokeWeight(floor(cellSize / 6));
+    strokeWeight(floor(nodeSize / 6));
     strokeCap(ROUND);
     stroke(white);
 
@@ -188,11 +188,11 @@ class AStarAI {
   }
 
   fillVisited() {
-    this.closedStack.forEach(cell => cell.fillCellComplete());
+    this.closedStack.forEach(node => node.fillNodeComplete());
   }
 
   fillOpenStack() {
-    this.openStack.forEach(cell => cell.fillCell(yellowGreen));
+    this.openStack.forEach(node => node.fillNode(yellowGreen));
   }
 
   getIndex(col, row) {
