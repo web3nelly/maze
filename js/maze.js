@@ -66,22 +66,22 @@ class Maze {
   removeWalls(curr, next) {
     const x = curr.col - next.col;
     if (x === 1) {
-      curr.walls[3] = false;
-      next.walls[1] = false;
+      curr.walls[3] = false; // LEFT
+      next.walls[1] = false; // Right
     }
     else if (x === -1) {
-      curr.walls[1] = false;
-      next.walls[3] = false;
+      curr.walls[1] = false; // Right
+      next.walls[3] = false; // LEFT
     }
 
     const y = curr.row - next.row;
     if (y === 1) {
-      curr.walls[0] = false;
-      next.walls[2] = false;
+      curr.walls[0] = false; // TOP
+      next.walls[2] = false; // BOTTOM
     }
     else if (y === -1) {
-      curr.walls[2] = false;
-      next.walls[0] = false;
+      curr.walls[2] = false; // BOTTOM
+      next.walls[0] = false; // TOP
     }
   }
 
@@ -90,8 +90,14 @@ class Maze {
   }
 
   getIndex(col, row) {
-    // return -1 if invalid index
-    if (col < 0 || row < 0 || col > this.cols - 1 || row > this.rows - 1)
+    const invalidIndex = (
+      col < 0 ||
+      row < 0 ||
+      col > this.cols - 1 ||
+      row > this.rows - 1
+    );
+
+    if (invalidIndex)
       return -1;
 
     // return index
