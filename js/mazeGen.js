@@ -1,3 +1,5 @@
+// https://en.wikipedia.org/wiki/Depth-first_search
+
 class MazeGen extends Maze {
   stack = [];
   currentCell = [];
@@ -70,8 +72,6 @@ class MazeGen extends Maze {
   }
 
   cleanUp() {
-    let doneCount = 0;
-
     this.grid.forEach(cell => {
       cell.visited = false;
     });

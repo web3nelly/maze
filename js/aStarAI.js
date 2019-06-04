@@ -4,16 +4,12 @@ class AStarAI {
   maze = {};
   // Array of cells in maze
   grid = [];
-
+  // Fastest known patch from start to goal
   path = [];
   // The set of nodes already evaluated
   closedStack = [];
   // The set of currently discovered nodes that are not evaluated yet.
   openStack = [];
-  // For each node, which node it can most efficiently be reached from.
-  // If a node can be reached from many nodes, cameFrom will eventually contain the
-  // most efficient previous step.
-  // cameFrom = [];
 
   start = {};
   goal = {};
@@ -23,15 +19,13 @@ class AStarAI {
   init(maze) {
 
     this.maze = { ...maze };
-    //Delete unused props of maze obj
-    //delete this.maze.grid;
+    //Delete unused props of maze obj, should I?
     delete this.maze.stack;
     delete this.maze.currentCell;
 
     this.grid = [...maze.grid];
 
     this.initAI();
-
     this.initialized = true;
   }
 
@@ -51,26 +45,10 @@ class AStarAI {
     this.start.previous = false;
 
     // Initially, only the start node/cell is known.
-    // console.log(this.start);
-
     this.openStack.push(this.start);
-
-    // console.log(this.start, this.openStack[0]);
-  }
-  drawSolving() {
-    // color open set
-    this.openStack.forEach(cell => cell.fillCell(yellowGreen));
-    // color closed set
-    //this.closedStack.forEach(cell => cell.fillCell(darkGreen));
-    // Color start and finish cells
-    this.start.fillCell(darkGreen);
-    this.goal.fillCell(lightRed);
-
-    this.drawPath();
   }
 
   solve() {
-    this.drawSolving();
 
     if (this.openStack.length > 0) {
       // Keep solving
@@ -99,16 +77,15 @@ class AStarAI {
         else if (tentativeGScore >= neighbor.g) {
           return;
         }
+
         // This path is the best until now. Record it!
-        //cameFrom[neighbor] = current
         neighbor.previous = current;
         // For each node, the cost of getting from the start node to that node.
         neighbor.g = tentativeGScore;
-        neighbor.f = neighbor.g + this.heuristicCostEstimate(neighbor, this.goal)
-
+        neighbor.f = neighbor.g + this.heuristicCostEstimate(neighbor, this.goal);
       }
-      // }
 
+      this.drawSolving();
     }
     else {
       // Can NOT solve!
@@ -119,10 +96,12 @@ class AStarAI {
 
   heuristicCostEstimate(neighbor, goal) {
     // Euclidean distance (Moving diagonal)
-    let d = dist(neighbor.cords.x, neighbor.cords.y, goal.cords.x, goal.cords.y);
+    const d = dist(neighbor.cords.x, neighbor.cords.y, goal.cords.x, goal.cords.y);
 
     // Manhattan distance (Not moving diagonal)
-    // const d = abs(neighbor.cords.centerX, neighbor.cords.centerY) + abs(goal.cords.centerX, goal.cords.centerY);
+    // const d =
+    //   abs(neighbor.cords.centerX, neighbor.cords.centerY) +
+    //   abs(goal.cords.centerX, goal.cords.centerY);
 
     return floor(d);
   }
@@ -150,19 +129,15 @@ class AStarAI {
     const left = grid[this.getIndex(col - 1, row)];
 
     if (top && !walls[0] && !closedStack.includes(top)) {
-      // console.log('top Wall false', top);
       neighbors.push(top);
     }
     if (right && !walls[1] && !closedStack.includes(right)) {
-      // console.log('right Wall false', right);
       neighbors.push(right);
     }
     if (bottom && !walls[2] && !closedStack.includes(bottom)) {
-      // console.log('bottom Wall false', bottom);
       neighbors.push(bottom);
     }
     if (left && !walls[3] && !closedStack.includes(left)) {
-      // console.log('left Wall false', left);
       neighbors.push(left);
     }
 
@@ -187,10 +162,20 @@ class AStarAI {
     }
   }
 
+  drawSolving() {
+    // Color start and finish cells
+    this.start.fillCell(darkGreen);
+    this.goal.fillCell(lightRed);
+    // color open set
+    this.fillOpenStack();
+
+    this.drawPath();
+  }
+
   drawPath() {
     beginShape();
     noFill();
-    strokeWeight(cellSize / 10);
+    strokeWeight(floor(cellSize / 6));
     strokeCap(ROUND);
     stroke(white);
 
@@ -203,6 +188,10 @@ class AStarAI {
 
   fillVisited() {
     this.closedStack.forEach(cell => cell.fillCellComplete());
+  }
+
+  fillOpenStack() {
+    this.openStack.forEach(cell => cell.fillCell(yellowGreen));
   }
 
   getIndex(col, row) {

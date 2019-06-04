@@ -16,18 +16,18 @@ class Cell {
   }
 
   drawCell() {
-    this.drawWalls();
     let c = gray;
 
     if (this.visited)
       c = lightGreen;
 
     this.fillCell(c);
+    this.drawWalls();
   }
 
   drawWalls() {
-
-    strokeWeight(4);
+    noStroke();
+    strokeWeight(floor(cellSize / 8));
     strokeCap(SQUARE);
     stroke(lightBlue);
 
@@ -65,7 +65,7 @@ class Cell {
   }
 
   fillCellComplete() {
-    const repeat = 5;
+    const repeat = 4;
 
     for (let i = 0; i <= repeat; i++)
       this.fillCell(lightGreen);

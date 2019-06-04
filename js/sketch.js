@@ -10,14 +10,14 @@ let pause = false;
 function setup() {
   // The size of each cell(node) of the maze 
   // Recommend cellSize: 10 - 150
-  cellSize = floor(windowWidth / 60);
+  cellSize = floor(windowWidth / 40);
 
   // A custom frame rate which slows down the frames for a larger cell size
   customFrameRate = floor(2000 / cellSize);
 
   // Smaller cells = more cells in the maze
   // The more cells there are, the slower the maze is genorated
-  // createMazeSpeed lets the darw() loop skip drawing every step of the maze genoration
+  // createMazeSpeed sets darw() loop to skip drawing every step of the maze genoration
   createMazeSpeed = cellSize > 99 ? 1 : floor(600 / cellSize);
 
   createCanvas(windowWidth, windowHeight); // Dynamic canvas size
@@ -30,7 +30,7 @@ function setup() {
   lightGreen = color(74, 178, 101, 50);
   darkGreen = color(0, 125, 25, 200);
   lightBlue = color(0, 140, 255, 200);
-  gray = color(180, 180, 180, 200);
+  gray = color(180, 180, 200, 200);
   white = color(250, 250, 250, 250);
 
   // Int Maze
@@ -64,12 +64,12 @@ function draw() {
     return;
   }
 
-  //  aStarAI solved the saze!
+  //  aStarAI solved the maze!
   if (maze.complete && aStarAI.initialized && aStarAI.completed) {
     aStarAI.fillVisited();
+    aStarAI.fillOpenStack();
     aStarAI.drawSolving();
     maze.draw();
-    // aStarAI.drawPath();
     noLoop();
     // console.log('Solved!!', aStarAI);
     return;
