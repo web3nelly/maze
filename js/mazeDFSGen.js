@@ -5,7 +5,7 @@ class MazeDFSGen extends Maze {
   currentNode = [];
   complete = false;
 
-  create() {
+  generate() {
     //Depth-first search
     this.currentNode.visited = true;
     this.currentNode.highlight();

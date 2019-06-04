@@ -49,11 +49,11 @@ function draw() {
    * @todo: Need to figure out a better way of handling all these if statements in draw()
    */
 
-  // Genorate randomized maze
+  // Generate randomized maze
   if (!maze.complete) {
     // Skips drawing eveny part of the maze genration
     for (i = 0; i < createMazeSpeed; i++) {
-      maze.create();
+      maze.generate();
     }
     return;
   }
@@ -68,7 +68,7 @@ function draw() {
   }
 
   //  aStarAI solved the maze!
-  if (maze.complete && aStarAI.initialized && aStarAI.completed) {
+  if (maze.complete && aStarAI.initialized && aStarAI.complete) {
     aStarAI.fillVisited();
     aStarAI.fillOpenStack();
     aStarAI.drawSolving();

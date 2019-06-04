@@ -13,7 +13,7 @@ class AStarAI {
 
   start = {};
   goal = {};
-  completed = false;
+  complete = false;
   initialized = false;
 
   init(maze) {
@@ -58,7 +58,7 @@ class AStarAI {
       current.visited = true;
 
       if (current === this.goal) {
-        this.completed = true;
+        this.complete = true;
         return;
       }
 
@@ -91,7 +91,7 @@ class AStarAI {
     else {
       // Can NOT solve!
       console.log('No solution found!');
-      this.completed = true;
+      this.complete = true;
     }
   }
 
