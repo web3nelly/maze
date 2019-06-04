@@ -82,6 +82,7 @@ class AStarAI {
         neighbor.previous = current;
         // For each node, the cost of getting from the start node to that node.
         neighbor.g = tentativeGScore;
+        // f(n)=g(n)+h(n)
         neighbor.f = neighbor.g + this.heuristicCostEstimate(neighbor, this.goal);
       }
 
@@ -118,8 +119,6 @@ class AStarAI {
   }
 
   getAvaliableNeighbors(cell) {
-    const neighbors = [];
-
     const { col, row, walls } = cell;
     const { grid, closedStack } = this;
 
@@ -127,6 +126,8 @@ class AStarAI {
     const right = grid[this.getIndex(col + 1, row)];
     const bottom = grid[this.getIndex(col, row + 1)];
     const left = grid[this.getIndex(col - 1, row)];
+
+    const neighbors = [];
 
     if (top && !walls[0] && !closedStack.includes(top)) {
       neighbors.push(top);

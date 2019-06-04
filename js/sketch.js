@@ -9,8 +9,8 @@ let pause = false;
 
 function setup() {
   // The size of each cell(node) of the maze 
-  // Recommend cellSize: 10 - 150
-  cellSize = floor(windowWidth / 40);
+  // Recommend cellSize: 10 - 160
+  cellSize = floor(windowWidth / 80);
 
   // A custom frame rate which slows down the frames for a larger cell size
   customFrameRate = floor(2000 / cellSize);
@@ -21,7 +21,6 @@ function setup() {
   createMazeSpeed = cellSize > 99 ? 1 : floor(600 / cellSize);
 
   createCanvas(windowWidth, windowHeight); // Dynamic canvas size
-  // createCanvas(1200, 800);
   frameRate(customFrameRate);
 
   // Define colors the program will use
@@ -38,13 +37,17 @@ function setup() {
   // Set Starting cell for maze gen
   maze.currentCell = maze.grid[0];
 
-  // Int AStarAI
+  // Set AI
   aStarAI = new AStarAI();
 }
 
 function draw() {
-  // background(255);
+  // background(255); // looks better without right now
   maze.draw();
+
+  /**
+   * @todo: Need to figure out a better way of handling all these if statements in draw()
+   */
 
   // Genorate randomized maze
   if (!maze.complete) {
