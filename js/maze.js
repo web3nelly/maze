@@ -1,20 +1,16 @@
 class Maze {
-  width = 0;
-  height = 0;
   cols = 0;
   rows = 0;
   grid = [];
 
   constructor(width, height) {
-    this.width = width;
-    this.height = height;
     this.cols = floor(width / nodeSize);
     this.rows = floor(height / nodeSize);
 
-    this.buildGridArray();
+    this.buildGrid();
   }
 
-  buildGridArray() {
+  buildGrid() {
     for (let row = 0; row < this.rows; row++)
       for (let col = 0; col < this.cols; col++)
         this.grid.push(new Node(col, row, nodeSize));
@@ -26,7 +22,7 @@ class Maze {
   }
 
   getRandomNeighbor(node) {
-    const neighbors = this.checkNeighbors(node);
+    const neighbors = this.getNeighbors(node);
 
     if (neighbors.length > 0) {
       const rn = floor(random(0, neighbors.length));
@@ -38,7 +34,7 @@ class Maze {
     return null;
   }
 
-  checkNeighbors(node) {
+  getNeighbors(node) {
     const { col, row } = node;
 
     const top = this.grid[this.getIndex(col, row - 1)];
