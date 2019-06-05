@@ -28,7 +28,9 @@ class Node {
 
   drawWalls() {
     noStroke();
-    strokeWeight(floor(nodeSize / 8));
+    let weight = floor(nodeSize / 10);
+    weight = weight > 10 ? 10 : weight;
+    strokeWeight(weight);
     strokeCap(SQUARE);
     stroke(lightBlue);
 
