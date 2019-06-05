@@ -47,7 +47,6 @@ class AStarAI {
   }
 
   solve() {
-
     if (this.openStack.length > 0) {
       // Keep solving
       const current = this.getLowestFScoreNode();
@@ -70,18 +69,18 @@ class AStarAI {
         const tentativeGScore = floor(current.g + 1);
 
         if (!this.openStack.includes(neighbor)) {
+          neighbor.h = this.heuristicCostEstimate(neighbor, this.goal);
           this.openStack.push(neighbor);
         }
-        else if (tentativeGScore >= neighbor.g) {
+        else if (tentativeGScore >= neighbor.g)
           return;
-        }
 
         // This path is the best until now. Record it!
         neighbor.previous = current;
         // For each node, the cost of getting from the start node to that node.
         neighbor.g = tentativeGScore;
         // f(n)=g(n)+h(n)
-        neighbor.f = neighbor.g + this.heuristicCostEstimate(neighbor, this.goal);
+        neighbor.f = neighbor.g + neighbor.h;
       }
 
       this.drawSolving();
@@ -127,18 +126,17 @@ class AStarAI {
 
     const neighbors = [];
 
-    if (top && !walls[0] && !closedStack.includes(top)) {
+    if (top && !walls[0] && !closedStack.includes(top))
       neighbors.push(top);
-    }
-    if (right && !walls[1] && !closedStack.includes(right)) {
+
+    if (right && !walls[1] && !closedStack.includes(right))
       neighbors.push(right);
-    }
-    if (bottom && !walls[2] && !closedStack.includes(bottom)) {
+
+    if (bottom && !walls[2] && !closedStack.includes(bottom))
       neighbors.push(bottom);
-    }
-    if (left && !walls[3] && !closedStack.includes(left)) {
+
+    if (left && !walls[3] && !closedStack.includes(left))
       neighbors.push(left);
-    }
 
     return neighbors;
   }
