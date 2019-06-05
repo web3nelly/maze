@@ -24,17 +24,15 @@ class AStarAI {
     delete this.maze.currentNode;
 
     this.grid = [...maze.grid];
-
-    this.initAI();
-    this.initialized = true;
-  }
-
-  initAI() {
-    //let { start, goal, grid } = this;
-
     this.start = this.grid[0];
     this.goal = this.grid[maze.getIndex(maze.cols - 1, maze.rows - 1)];
 
+    this.initAStar();
+
+    this.initialized = true;
+  }
+
+  initAStar() {
     // For the first node(start), that value is completely heuristic.
     this.start.h = this.heuristicCostEstimate(this.start, this.goal);
     // The cost of going from start to start is zero.
@@ -44,7 +42,7 @@ class AStarAI {
     this.start.f = this.start.g + this.start.h;
     this.start.previous = false;
 
-    // Initially, only the start node/node is known.
+    // Initially, only the start node is known.
     this.openStack.push(this.start);
   }
 
