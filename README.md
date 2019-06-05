@@ -10,8 +10,9 @@ Currently not using JS modules so the program can run without a server. Just ope
 - Open up some walls in the map that is over a given size, to enable more options for solving.
 - Refactor to asynchronous programming where possible.
 - Comment all method params and returns.
-- User input for Node size
-- User selects the Goal(finish) after maze is generated
+- User input for Node size.
+- User selects the Goal(finish) after maze is generated.
+- Try to use gulp with Babel to modularize this program.
 - Expand the A* algorithm in to a better AI, by checking if the path will be intercepted.
 - Add more algorithms that can solve the maze.
 - Compare the algorithms that solve the maze visually.
