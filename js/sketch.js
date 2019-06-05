@@ -9,7 +9,7 @@ let pause = false;
 
 function setup() {
   // The size of each node(node) of the maze 
-  // Recommend nodeSize: 10 - 120
+  // Recommend nodeSize: windowWidth / 10 - 120
   nodeSize = floor(windowWidth / 80);
 
   // A custom frame rate which slows down the frames for a larger node size
