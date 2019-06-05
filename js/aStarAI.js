@@ -13,6 +13,7 @@ class AStarAI {
 
   start = {};
   goal = {};
+  currentNode = {};
   complete = false;
   initialized = false;
 
@@ -49,8 +50,9 @@ class AStarAI {
   solve() {
     if (this.openStack.length > 0) {
       // Keep solving
-      const current = this.getLowestFScoreNode();
-      this.updatePath(current);
+      this.currentNode = this.getLowestFScoreNode();
+      const current = this.currentNode;
+      this.updatePath();
 
       current.visited = true;
 
@@ -147,10 +149,10 @@ class AStarAI {
         this.openStack.splice(i, 1);
   }
 
-  updatePath(current) {
+  updatePath() {
     this.path = [];
 
-    let temp = current;
+    let temp = this.currentNode;
     this.path.push(temp);
 
     while (temp.previous) {
@@ -164,24 +166,47 @@ class AStarAI {
     this.start.fillNode(darkGreen);
     this.goal.fillNode(lightRed);
     // color open set
-    this.fillOpenStack();
-
+    // this.fillOpenStack();
     this.drawPath();
   }
 
+  // Draw path with shape
+  // drawPath() {
+  //   beginShape();
+  //   noFill();
+  //   strokeWeight(floor(nodeSize / 6));
+  //   strokeCap(ROUND);
+  //   stroke(white);
+
+  //   for (let i = 0; i < this.path.length; i++) {
+  //     vertex(this.path[i].cords.centerX, this.path[i].cords.centerY)
+  //   }
+
+  //   endShape();
+  // }
+
   drawPath() {
-    beginShape();
-    noFill();
-    strokeWeight(floor(nodeSize / 6));
-    strokeCap(ROUND);
-    stroke(white);
+    const current = this.currentNode;
+    console.log(current);
 
-    for (let i = 0; i < this.path.length; i++) {
-      vertex(this.path[i].cords.centerX, this.path[i].cords.centerY)
+    if (current.previous) {
+      noFill();
+      strokeWeight(floor(nodeSize / 6));
+      strokeCap(ROUND);
+
+      const r = floor((255 * this.path.length) / 255);
+      console.log('r:', r);
+      const c = color(r, 250, 250, 200);
+      stroke(c);
+      line(
+        current.cords.centerX,
+        current.cords.centerY,
+        current.previous.cords.centerX,
+        current.previous.cords.centerY
+      );
     }
-
-    endShape();
   }
+
 
   fillVisited() {
     this.closedStack.forEach(node => node.fillNodeComplete());
