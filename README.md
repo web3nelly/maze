@@ -7,7 +7,7 @@ Currently not using JS modules so the program can run without a server. Just ope
 - [p5.js](https://p5js.org/get-started/) library, for rendering graphic to the canvas
 
 ## Current Features
-- Mouse click pauses program wherever it’s at.
+- Mouse click toggles pausing the program wherever it’s at.
 
 ## Todos and Upcoming Features
 - Open up some walls in the map that is over a given size, to enable more options for solving.
