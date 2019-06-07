@@ -16,6 +16,6 @@ Currently not using JS modules so the program can run without a server. Just ope
 - User input for Node size.
 - User selects the Goal(finish) after maze is generated.
 - Try to use gulp with Babel to modularize this program.
-- Expand the A* algorithm in to a better AI, by checking if the path will be intercepted.
+- Expand the A* algorithm in to a better AI, by checking if the path will be intersected.
 - Add more algorithms that can solve the maze.
 - Compare the algorithms that solve the maze visually.
