@@ -27,11 +27,11 @@ class Node {
   }
 
   drawWalls() {
-    noStroke();
+    noFill();
     let weight = floor(nodeSize / 10);
-    weight = weight > 6 ? 6 : weight;
+    weight = weight > 8 ? 8 : weight;
     strokeWeight(weight);
-    strokeCap(SQUARE);
+    strokeCap(ROUND);
     stroke(lightBlue);
 
     const { x: x1, y: y1 } = this.cords;

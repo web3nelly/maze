@@ -10,8 +10,8 @@ class Maze {
     this.buildGrid();
 
     /**
-     * @todo: Need to debug clearCenterWalls, causes no solution about 5% of the time
-     * I beleive this is caused by no checking diagonal nodes while solving.
+     * @todo: Need to debug clearCenterWalls(), becauses no solution about 5% of the time
+     * I beleive this is caused by not checking diagonal nodes while solving.
      */
     // this.clearCenterWalls();
   }
@@ -40,17 +40,6 @@ class Maze {
     return null;
   }
 
-  getNeighbors(node) {
-    const { col, row } = node;
-
-    const top = this.grid[this.getIndex(col, row - 1)] || null;
-    const right = this.grid[this.getIndex(col + 1, row)] || null;
-    const bottom = this.grid[this.getIndex(col, row + 1) || null];
-    const left = this.grid[this.getIndex(col - 1, row) || null];
-
-    return [top, right, bottom, left];
-  }
-
   getAvailableNeighbors(node) {
     const neighbors = this.getNeighbors(node);
     const availables = [];
@@ -61,6 +50,17 @@ class Maze {
     });
 
     return availables;
+  }
+
+  getNeighbors(node) {
+    const { col, row } = node;
+
+    const top = this.grid[this.getIndex(col, row - 1)] || null;
+    const right = this.grid[this.getIndex(col + 1, row)] || null;
+    const bottom = this.grid[this.getIndex(col, row + 1) || null];
+    const left = this.grid[this.getIndex(col - 1, row) || null];
+
+    return [top, right, bottom, left];
   }
 
   removeWalls(curr, next) {
@@ -85,27 +85,27 @@ class Maze {
     }
   }
 
-  // clearCenterWalls() {
-  //   if (this.cols > 9 && this.rows > 4) {
-  //     const center = this.getIndex(floor(this.cols / 2), floor(this.rows / 2));
-  //     const centerNode = this.grid[center];
-  //     const neighbors = this.getNeighbors(centerNode);
+  clearCenterWalls() {
+    if (this.cols > 9 && this.rows > 4) {
+      const center = this.getIndex(floor(this.cols / 2), floor(this.rows / 2));
+      const centerNode = this.grid[center];
+      const neighbors = this.getNeighbors(centerNode);
 
-  //     // remove center walls
-  //     for (let i = 0; i < 4; i++)
-  //       centerNode.walls[i] = false;
+      // remove center walls
+      for (let i = 0; i < 4; i++)
+        centerNode.walls[i] = false;
 
-  //     // Top neighbor bottom wall
-  //     neighbors[0].walls[2] = false;
-  //     // Right neighbor left wall
-  //     neighbors[1].walls[3] = false;
-  //     // Bottom neightbor top wall
-  //     neighbors[2].walls[0] = false;
-  //     // Left neightbor right wall
-  //     neighbors[3].walls[1] = false;
+      // Top neighbor bottom wall
+      neighbors[0].walls[2] = false;
+      // Right neighbor left wall
+      neighbors[1].walls[3] = false;
+      // Bottom neightbor top wall
+      neighbors[2].walls[0] = false;
+      // Left neightbor right wall
+      neighbors[3].walls[1] = false;
 
-  //   }
-  // }
+    }
+  }
 
   cleanUp() {
     this.grid.forEach(node => node.visited = false);
